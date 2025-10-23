@@ -1,0 +1,143 @@
+# CEDB Development Rules
+
+## Core Project Reference
+
+**ALWAYS read and follow `specs.md` before implementing any features.**
+
+The specs.md file contains comprehensive technical specifications, architecture guidelines, and requirements for the CEDB (Cold Email Database) project.
+
+## Critical Development Rules
+
+### 1. Component Library
+
+- **ALWAYS use shadcn/ui components** - Never build custom base components when shadcn alternatives exist
+- Check shadcn/ui documentation first before creating any UI component
+- Use components from `@/components/ui/` directory
+
+### 2. MCP Server Usage
+
+When implementing features, leverage these MCP servers through Cursor:
+
+- **Supabase MCP**: For all database operations, migrations, schema queries, and Supabase-specific patterns
+- **Context7 MCP**: For up-to-date documentation on Next.js 16, React 19, TanStack Table, and other libraries
+- Always verify implementation patterns against official documentation via Context7
+
+### 3. Code Standards
+
+- **Indentation**: Use spaces, NEVER hard tabs (project linting requirement)
+- **TypeScript**: Fully typed code - avoid `any` types without explicit justification
+- **No assumptions**: Always check official documentation before implementing
+- **Fix root causes**: Address issues at their source, not symptoms
+
+### 4. Architecture Patterns
+
+- **Server Components First**: Default to React Server Components; use 'use client' directive only when necessary (interactivity, hooks, browser APIs)
+- **Supabase Client**: Use server-side client for RSC, client-side for interactive components
+- **Error Handling**: Implement comprehensive error boundaries and user-friendly error messages
+- **Loading States**: Always provide loading indicators or skeleton screens
+
+### 5. Performance Optimization
+
+- **Hyper-optimize**: Every feature must be optimized for efficiency and fast load times
+- Server-side pagination for large datasets
+- Virtual scrolling for tables with >100 rows
+- Debounced search inputs
+- Dynamic imports for heavy components
+- Next.js Image component for all images
+- Measure performance impact of changes
+
+### 6. Database Operations
+
+- Use Supabase MCP to verify best practices
+- Implement Row Level Security (RLS) policies
+- Use parameterized queries (never string concatenation)
+- Index columns used in WHERE clauses and sorting
+- Track schema changes via migrations
+
+### 7. User Experience
+
+- Clear loading states for all async operations
+- Toast notifications for user actions (success/error)
+- Confirmation dialogs for destructive actions
+- Empty states with helpful CTAs
+- Responsive design (desktop-first, mobile-compatible)
+
+### 8. Package Manager
+
+- **Always use Bun**: Run commands with `bun run dev`, `bun install`, etc. (NOT npm)
+- Reference existing package.json for dependencies
+
+### 9. Security
+
+- Validate inputs both client and server-side
+- Sanitize user inputs before display
+- Use Supabase RLS for data access control
+- Restrict authentication to @revenx.com email domain
+
+### 10. Documentation
+
+- Add JSDoc comments for public functions
+- Document complex logic with inline comments
+- Keep README.md updated with setup instructions
+- Update specs.md if requirements change
+
+## File Structure Conventions
+
+```text
+src/app/              # Next.js App Router pages
+src/components/ui/    # shadcn/ui components
+src/components/       # Custom components (built on shadcn)
+src/lib/              # Utilities, helpers, Supabase client
+src/types/            # TypeScript type definitions
+```
+
+## Before Starting Any Task
+
+1. Read relevant sections of `specs.md`
+2. Use Context7 MCP to check latest documentation for libraries involved
+3. Use Supabase MCP if task involves database operations
+4. Check if shadcn/ui has a component for what you're building
+5. Verify implementation approach aligns with performance requirements
+
+## Common Patterns
+
+### Supabase Client Setup
+
+```typescript
+// Server Component
+import { createClient } from '@/lib/supabase/server'
+
+// Client Component  
+import { createClient } from '@/lib/supabase/client'
+```
+
+### CSV Operations
+
+- Use `papaparse` for CSV parsing and generation
+- Stream large files, don't load entirely into memory
+- Validate CSV structure before processing
+- Provide progress feedback for large uploads
+
+### Data Tables
+
+- Use TanStack React Table with shadcn/ui Table components
+- Implement server-side pagination
+- Add column sorting, filtering, and search
+- Use virtual scrolling for large datasets
+
+## Testing Requirements
+
+- Test critical business logic
+- Verify Supabase operations work correctly
+- Check accessibility with automated tools
+- Ensure responsive design works on different screen sizes
+
+## Deployment
+
+- Target platform: Vercel
+- Environment variables in `.env.local` (see specs.md)
+- Never commit sensitive credentials
+
+---
+
+**Remember**: This is an internal tool for Revenx employees. Prioritize functionality, performance, and ease of use over complex features.
