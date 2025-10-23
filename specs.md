@@ -93,9 +93,19 @@
 
 #### Expected Tables
 
-- Primary table: `contacts` or `leads` (to be defined during development)
-- Fields likely include: email, name, company, status, created_at, updated_at
-- Relationships: Consider campaign tracking, email status, etc.
+- Primary table: `contacts`
+- **Required Fields:**
+  - `id` (UUID, primary key)
+  - `email` (string, required, unique)
+  - `name` (string, nullable)
+  - `company` (string, nullable)
+  - `industry` (string, nullable) - Federal Government, Financial/Insurance, School District, State Government, University
+  - `state` (string, nullable) - USA state code (2 letters)
+  - `status` (string, nullable) - email validation status: Valid, Hard Bounce, Soft Bounce, Unsubscribe, Do Not Contact
+  - `notes` (text, nullable)
+  - `created_at` (timestamp)
+  - `updated_at` (timestamp)
+- Relationships: To be defined based on future requirements
 
 ### UI/UX Standards
 
@@ -122,14 +132,19 @@
 - **Component:** TanStack React Table with shadcn/ui Table components
 - **Features Required:**
   - Column sorting (asc/desc)
-  - Global search
-  - Column-specific filters
+  - Global search (by name, email, company)
+  - **Filters:**
+    - Industry (multi-select dropdown: Federal Government, Financial/Insurance, School District, State Government, University)
+    - State (USA states, multi-select dropdown)
+    - Status (Valid, Hard Bounce, Soft Bounce, Unsubscribe, Do Not Contact)
+    - Date Added (Today, Last 7/30/90 days, This year)
   - Pagination (server-side)
   - Row selection (single & bulk)
-  - Virtual scrolling for large datasets
+  - Virtual scrolling for large datasets (>100 rows)
   - Responsive columns (hide on mobile)
   - Export selected rows
   - Refresh data button
+  - Clear all filters button
 
 #### CSV Upload
 

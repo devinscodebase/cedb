@@ -34,30 +34,51 @@ export interface Database {
           created_at: string
           updated_at: string
           email: string
-          name: string | null
-          company: string | null
-          status: string | null
+          company_name: string
+          industry: string
+          state: string
+          status: string
+          first_name: string | null
+          last_name: string | null
+          job_title: string | null
+          phone: string | null
+          website: string | null
           notes: string | null
+          deleted_at: string | null
         }
         Insert: {
           id?: string
           created_at?: string
           updated_at?: string
           email: string
-          name?: string | null
-          company?: string | null
-          status?: string | null
+          company_name: string
+          industry: string
+          state: string
+          status?: string
+          first_name?: string | null
+          last_name?: string | null
+          job_title?: string | null
+          phone?: string | null
+          website?: string | null
           notes?: string | null
+          deleted_at?: string | null
         }
         Update: {
           id?: string
           created_at?: string
           updated_at?: string
           email?: string
-          name?: string | null
-          company?: string | null
-          status?: string | null
+          company_name?: string
+          industry?: string
+          state?: string
+          status?: string
+          first_name?: string | null
+          last_name?: string | null
+          job_title?: string | null
+          phone?: string | null
+          website?: string | null
           notes?: string | null
+          deleted_at?: string | null
         }
         Relationships: []
       }
