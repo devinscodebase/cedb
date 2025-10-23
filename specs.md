@@ -21,6 +21,7 @@
 #### Framework & Runtime
 
 - **Next.js 16.0.0** - React framework with App Router
+  - Uses `proxy.ts` convention (replaces deprecated `middleware.ts`)
 - **React 19.2.0** - UI library
 - **TypeScript 5.x** - Type-safe development
 - **Bun** - Package manager and runtime (use `bun run dev`, not npm)
@@ -199,14 +200,16 @@ src/
 │   ├── supabase/
 │   │   ├── client.ts          # Supabase client setup
 │   │   ├── server.ts          # Server-side Supabase
+│   │   ├── proxy.ts           # Proxy session management
 │   │   └── types.ts           # Database types
 │   ├── csv/
 │   │   ├── parser.ts          # CSV import logic
 │   │   └── generator.ts       # CSV export logic
 │   ├── utils.ts               # Utility functions
 │   └── validations.ts         # Zod schemas
-└── types/
-    └── index.ts               # TypeScript types
+├── types/
+│   └── index.ts               # TypeScript types
+└── proxy.ts                   # Next.js proxy (session refresh)
 ```
 
 ### Environment Variables
@@ -215,8 +218,8 @@ Required in `.env.local`:
 
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_ROLE_KEY=     # Server-side only
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
+SUPABASE_SECRET_KEY=     # Server-side only (optional)
 ```
 
 ### Testing Requirements
